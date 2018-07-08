@@ -157,6 +157,19 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           ListTile(
+            leading: Icon(Icons.person_add),
+            title: Text(
+              'สมาชิก (Members)',
+              style: TextStyle(fontSize: 20.0),
+            ),
+            subtitle: Text('สมาชิก'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed('/member');
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.settings),
             title: Text(
               'ตั้งค่าการใช้งาน',
