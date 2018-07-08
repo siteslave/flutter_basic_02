@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class UsersScreen extends StatefulWidget {
   @override
   _UsersScreenState createState() => _UsersScreenState();
@@ -13,14 +15,18 @@ class _UsersScreenState extends State<UsersScreen> {
   bool isLoading = true;
 
   Future<Null> getUsers() async {
-    final response = await http.get('https://randomuser.me/api/?results=20');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = await prefs.get('token');
+
+    final response =
+        await http.get('http://www.udonsoft.com:3333/users?token=$token');
 
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
       print(jsonResponse);
       setState(() {
         isLoading = false;
-        users = jsonResponse['results'];
+        users = jsonResponse['rows'];
       });
     } else {
       print('Connection error!');

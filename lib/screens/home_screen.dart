@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:my_app/screens/add_screen.dart';
 import 'package:my_app/screens/page_one.dart';
 import 'package:my_app/screens/page_two.dart';
 import 'package:my_app/screens/page_three.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,6 +22,18 @@ class _HomeScreenState extends State<HomeScreen> {
   List pages = [PageOne(), PageTwo(), PageThree()];
 
   bool hasImage = true;
+
+  Future<Null> getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = await prefs.get('token');
+    print(token);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getToken();
+  }
 
   @override
   Widget build(BuildContext context) {
